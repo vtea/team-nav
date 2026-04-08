@@ -59,11 +59,27 @@ const actions = {
     })
   },
 
-  // 退出系统
-  LogOut({commit, state}) {
-    return http.post('/logout').then(() => {
-      window.localStorage.userLogout = true;
-    })
+  /**
+   * 退出系统：通知后端注销会话，并立即清空前端 userInfo，
+   * 侧栏等依赖 loginUser.id 的界面无需整页刷新即可回到「未登录」。
+   */
+  LogOut({commit}) {
+    const emptyUser = {
+      id: '',
+      username: '',
+      nickname: '',
+      firstname: '',
+      isAdmin: false,
+      avatar: '',
+    };
+    return http.post('/logout')
+      .then(() => {
+        window.localStorage.userLogout = true;
+        commit('SET_USER_INFO', emptyUser);
+      })
+      .catch(() => {
+        commit('SET_USER_INFO', emptyUser);
+      });
   },
 }
 

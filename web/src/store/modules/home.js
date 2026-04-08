@@ -1,16 +1,53 @@
 import http from '@/plugins/http';
 import {buildStarCard, saveStarCard, loadCardDynamicContent} from "@/utils";
 
+/**
+ * 侧栏默认展开的子菜单 id（与后端返回的树结构一致）
+ * @param {Array<Object>|undefined} menus 菜单树根
+ * @returns {string[]}
+ */
+function computeOpenIds(menus) {
+  if (!Array.isArray(menus)) {
+    return [];
+  }
+  return menus
+    .filter(it => Array.isArray(it.children) && it.children.length > 0)
+    .map(it => it.id);
+}
+
 const state = {
   menus: [],
   datas: [],
   openIds: [],
+  /** 无关键词时接口返回的侧栏菜单深拷贝，搜索时只换 datas，不换侧栏树 */
+  sidebarMenusSnapshot: null,
 }
 const mutations = {
-  CHANGE_DATA: (state, res) => {
-    state.menus = res.menus;
-    state.datas = res.datas;
-    state.openIds = res.menus.filter(it => Array.isArray(it.children) && it.children.length > 0).map(it => it.id);
+  CHANGE_DATA: (state, payload) => {
+    const menus = payload.menus;
+    const datas = payload.datas;
+    const kw = payload.keywords == null ? '' : String(payload.keywords).trim();
+
+    state.datas = datas;
+
+    if (!kw) {
+      state.menus = menus;
+      try {
+        state.sidebarMenusSnapshot = menus ? JSON.parse(JSON.stringify(menus)) : null;
+      } catch (e) {
+        state.sidebarMenusSnapshot = null;
+      }
+    } else if (state.sidebarMenusSnapshot && state.sidebarMenusSnapshot.length) {
+      try {
+        state.menus = JSON.parse(JSON.stringify(state.sidebarMenusSnapshot));
+      } catch (e) {
+        state.menus = menus;
+      }
+    } else {
+      state.menus = menus;
+    }
+
+    state.openIds = computeOpenIds(state.menus);
   },
   LOAD_STAR_CARD: state => {
     const starCategory = buildStarCard(state.datas);
@@ -22,6 +59,7 @@ const mutations = {
       state.menus.splice(0, 0, starCategory);
       state.datas.splice(0, 0, starCategory);
     }
+    state.openIds = computeOpenIds(state.menus);
   }
 }
 
@@ -44,12 +82,19 @@ const actions = {
   },
   // 加载
   loadHomeCards({commit}, keywords) {
-    return http.get(`/api/v1/card/tree?keywords=${keywords}`).then(res => {
-      commit('CHANGE_DATA', res);
-      commit('LOAD_STAR_CARD');
-      loadCardDynamicContent(state.datas);
-      return res;
-    });
+    const kw = keywords == null ? '' : keywords;
+    return http
+      .get('/api/v1/card/tree', {params: {keywords: kw}})
+      .then(res => {
+        commit('CHANGE_DATA', {
+          menus: res.menus,
+          datas: res.datas,
+          keywords: kw,
+        });
+        commit('LOAD_STAR_CARD');
+        loadCardDynamicContent(state.datas);
+        return res;
+      });
   },
 }
 

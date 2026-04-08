@@ -6,7 +6,7 @@ import com.tuituidan.openhub.bean.vo.NoticeVo;
 import com.tuituidan.openhub.consts.Consts;
 import com.tuituidan.openhub.service.NoticeService;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

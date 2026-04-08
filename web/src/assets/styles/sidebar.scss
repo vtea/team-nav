@@ -1,17 +1,18 @@
 #app {
 
-  .main-container {
+  .nav-app-shell__main {
     height: 100%;
     transition: margin-left .28s;
     margin-left: $base-sidebar-width;
     position: relative;
+    background-color: $apple-bg-page;
   }
 
-  .sidebarHide {
+  .nav-app-shell__main--sidebar-hidden {
     margin-left: 0!important;
   }
 
-  .sidebar-container {
+  .nav-sidebar {
     -webkit-transition: width .28s;
     transition: width 0.28s;
     width: $base-sidebar-width !important;
@@ -24,8 +25,8 @@
     left: 0;
     z-index: 1001;
     overflow: hidden;
-    -webkit-box-shadow: 2px 0 6px rgba(0,21,41,.35);
-    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    -webkit-box-shadow: 4px 0 32px rgba(0, 0, 0, 0.08);
+    box-shadow: 4px 0 32px rgba(0, 0, 0, 0.08);
 
     // reset element-ui css
     .horizontal-collapse-transition {
@@ -44,9 +45,38 @@
       height: 100%;
     }
 
-    &.has-logo {
+    /** 首页侧栏：底栏用户区 + 中间菜单可滚动（flex 分配高度） */
+    &.nav-sidebar--with-logo.nav-sidebar--shell-home {
+      &.theme-dark {
+        background-color: $base-menu-background;
+      }
+
+      &.theme-light {
+        background-color: $base-menu-light-background;
+      }
+
+      display: flex;
+      flex-direction: column;
+      font-size: $home-sidebar-menu-font-size;
+      /** 底栏用户区在 flex 内必须可收缩，避免 el-dropdown 撑破侧栏宽度 */
+      .sidebar-user-footer {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+
+      .nav-sidebar__menu-scroll.el-scrollbar {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto !important;
+      }
+    }
+
+    &.nav-sidebar--with-logo:not(.nav-sidebar--shell-home) {
       .el-scrollbar {
-        height: calc(100% - 50px);
+        height: calc(100% - 48px);
       }
     }
 
@@ -92,7 +122,7 @@
     }
 
     & .theme-dark .submenu-title-noDropdown.is-active {
-      color: rgb(64, 158, 255) !important;
+      color: $apple-blue !important;
     }
 
     & .theme-dark .is-active > .el-submenu__title {
@@ -116,14 +146,79 @@
         background-color: $base-sub-menu-hover !important;
       }
     }
+
+    /** 浅色侧栏：工具站式激活项浅蓝底 + 圆角（参考目录站） */
+    & .theme-light {
+      .el-menu-item,
+      .el-submenu__title {
+        border-radius: 8px;
+        margin: 2px 8px;
+        width: calc(100% - 16px) !important;
+        min-width: auto !important;
+        font-size: $home-sidebar-menu-font-size !important;
+        font-weight: 400;
+        letter-spacing: -0.12px;
+      }
+
+      .el-menu-item.is-active {
+        background-color: rgba(0, 113, 227, 0.1) !important;
+        color: $apple-blue !important;
+        font-weight: 600 !important;
+      }
+
+      .el-submenu .el-menu-item {
+        min-width: auto !important;
+      }
+
+      .el-menu--inline {
+        background-color: rgba(0, 0, 0, 0.02) !important;
+        border-radius: 8px;
+        margin: 4px 0;
+      }
+
+      .el-submenu__title:hover,
+      .el-menu-item:hover {
+        background-color: rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .el-menu--collapse {
+        .el-menu-item,
+        .el-submenu__title {
+          margin: 0 !important;
+          width: 100% !important;
+          border-radius: 0;
+        }
+      }
+    }
+
+    /** 后台管理：子菜单项与一级菜单左缘对齐，避免过深缩进 */
+    &.nav-sidebar--shell-admin .theme-light {
+      .el-menu--inline {
+        padding-left: 0 !important;
+      }
+
+      .el-submenu .el-menu-item {
+        padding-left: 20px !important;
+      }
+    }
+
+    &.nav-sidebar--shell-admin .theme-dark {
+      .el-menu--inline {
+        padding-left: 0 !important;
+      }
+
+      .el-submenu .el-menu-item {
+        padding-left: 20px !important;
+      }
+    }
   }
 
-  .hideSidebar {
-    .sidebar-container {
+  .nav-app-shell--sidebar-collapsed {
+    .nav-sidebar {
       width: 54px !important;
     }
 
-    .main-container {
+    .nav-app-shell__main {
       margin-left: 54px;
     }
 
@@ -173,18 +268,18 @@
   }
 
   // mobile responsive
-  .mobile {
-    .main-container {
+  .nav-app-shell--mobile {
+    .nav-app-shell__main {
       margin-left: 0px;
     }
 
-    .sidebar-container {
+    .nav-sidebar {
       transition: transform .28s;
       width: $base-sidebar-width !important;
     }
 
-    &.hideSidebar {
-      .sidebar-container {
+    &.nav-app-shell--sidebar-collapsed {
+      .nav-sidebar {
         pointer-events: none;
         transition-duration: 0.3s;
         transform: translate3d(-$base-sidebar-width, 0, 0);
@@ -192,10 +287,10 @@
     }
   }
 
-  .withoutAnimation {
+  .nav-app-shell--no-animation {
 
-    .main-container,
-    .sidebar-container {
+    .nav-app-shell__main,
+    .nav-sidebar {
       transition: none;
     }
   }

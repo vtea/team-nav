@@ -11,10 +11,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+/**
+ * 排版继承全局 body（index.scss）；此处仅保留页面级布局
+ */
 .home {
-  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  color: #676a6c;
   overflow-x: hidden;
 }
 </style>

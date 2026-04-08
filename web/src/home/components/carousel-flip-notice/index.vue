@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-carousel v-if="dataList.length"
-                 trigger="click" height="60px"
+                 trigger="click" height="48px"
                  indicator-position="none"
                  :interval="cutOverSpeed * 1000">
       <el-carousel-item v-for="item in dataList" :key="item.id">
-        <div style="display: flex; align-items: center;justify-content: center">
-          <div style="height: 60px;line-height: 60px;display: flex;align-items: center" v-html="item.content"></div>
+        <div class="carousel-notice-row">
+          <div class="carousel-notice__content" v-html="item.content"></div>
           <el-statistic
             v-if="item.endTime"
             format="DD天HH小时mm分钟ss秒"
@@ -48,13 +48,46 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.carousel-notice-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  min-height: 48px;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+/** 公告正文：与主区辅助文案同阶，避免过小 */
+.carousel-notice__content {
+  line-height: 1.45;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.12px;
+  color: rgba(0, 0, 0, 0.72);
+
+  ::v-deep p {
+    margin: 0;
+  }
+}
+
 .el-statistic {
   width: auto;
-  height: 36px;
   display: flex;
+  flex-shrink: 0;
+
+  ::v-deep .con {
+    display: flex;
+    align-items: baseline;
+  }
+
+  /** 倒计时：略小于原 22px，与左侧正文视觉平衡 */
   ::v-deep .con .number {
-    font-size: 26px;
-    color: red;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.12px;
+    color: #0071e3;
   }
 }
 </style>

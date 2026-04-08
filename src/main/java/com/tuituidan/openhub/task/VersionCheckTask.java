@@ -5,7 +5,7 @@ import com.tuituidan.openhub.util.HttpUtils;
 import com.tuituidan.openhub.util.thread.CompletableUtils;
 import java.util.Objects;
 import java.util.function.ToIntFunction;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

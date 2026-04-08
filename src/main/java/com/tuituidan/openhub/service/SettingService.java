@@ -5,7 +5,7 @@ import com.tuituidan.openhub.bean.entity.Setting;
 import com.tuituidan.openhub.consts.Consts;
 import com.tuituidan.openhub.repository.SettingRepository;
 import com.tuituidan.openhub.util.BeanExtUtils;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;

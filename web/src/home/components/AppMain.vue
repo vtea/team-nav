@@ -1,11 +1,12 @@
 <template>
-  <section class="app-main">
-    <div class="category-main" v-for="(category, index) in homeCards" :key="category.id">
-      <div class="anchor-point" :class="{'anchor-point-first':index===0}" :id="category.id"></div>
-      <div class="category-title" v-if="Array.isArray(category.children)&&category.children.length===1">
+  <section class="nav-home-main">
+    <home-search-bar class="nav-home-main__search"/>
+    <div class="nav-home-category" v-for="(category, index) in homeCards" :key="category.id">
+      <div class="nav-home-category__anchor" :class="{'nav-home-category__anchor--first':index===0}" :id="category.id"></div>
+      <div class="nav-home-category__title" v-if="Array.isArray(category.children)&&category.children.length===1">
         <span v-text="category.name + ' / ' + category.children[0].name"></span>
       </div>
-      <div class="category-title" v-else>
+      <div class="nav-home-category__title" v-else>
         <span v-text="category.name"></span>
       </div>
       <el-tabs v-if="Array.isArray(category.children)&&category.children.length>1" :value="category.children[0].id">
@@ -18,7 +19,7 @@
       <category-children v-else :datas="category.cards"></category-children>
     </div>
     <el-empty v-if="homeCards.length<=0" description="没有任何数据"></el-empty>
-    <el-backtop target=".app-main"></el-backtop>
+    <el-backtop target=".nav-home-main"></el-backtop>
   </section>
 </template>
 
@@ -29,6 +30,7 @@ import {mapGetters} from "vuex";
 export default {
   name: 'AppMain',
   components: {
+    'home-search-bar': () => import('@/home/components/HomeSearchBar.vue'),
     'category-children': () => import('@/home/components/category-children.vue'),
   },
   computed: {
@@ -40,27 +42,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-main {
-  height: calc(100vh - 60px);
+@import "~@/assets/styles/variables.scss";
+
+.nav-home-main {
+  height: calc(100vh - 48px);
   width: 100%;
   position: relative;
   overflow: auto;
-  background-color: #f5f7f9;
-  padding-top: 20px;
+  background-color: $apple-bg-page;
+  padding: clamp(16px, 2vw, 24px) clamp(16px, 2.5vw, 28px) 40px;
+  box-sizing: border-box;
 }
 
-.category-main {
-  .anchor-point {
+.nav-home-main__search {
+  display: block;
+}
+
+.nav-home-category {
+  &:not(:first-of-type) {
+    margin-top: 16px;
+  }
+
+  .nav-home-category__anchor {
     position: relative;
     top: -18px;
   }
-  .anchor-point-first{
+  .nav-home-category__anchor--first {
     top: -20px;
   }
 
   .el-tabs {
     ::v-deep .el-tabs__header {
-      margin: 8px 0 0 20px;
+      margin: 10px 0 0 2px;
 
       .el-tabs__nav-wrap::after {
         display: none;
@@ -71,69 +84,64 @@ export default {
       }
 
       .el-tabs__nav {
-        background-color: #e0e0e0;
-        border-radius: 12px;
-        height: 24px;
+        border-radius: 10px;
+        height: 34px;
+        padding: 3px;
+        background-color: rgba(255, 255, 255, 0.92);
+        border: 1px solid $apple-border-hairline;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.05);
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+          -webkit-backdrop-filter: saturate(180%) blur(12px);
+          backdrop-filter: saturate(180%) blur(12px);
+        }
 
         .el-tabs__item {
-          border-radius: 12px;
+          border-radius: 8px;
           text-align: center;
-          padding: 0 18px;
-          height: 24px;
-          line-height: 24px;
-          color: #515a6e;
+          padding: 0 14px;
+          height: 28px;
+          line-height: 28px;
+          font-size: 13px;
+          font-weight: 400;
+          letter-spacing: -0.12px;
+          color: $apple-text-tertiary;
         }
 
         .el-tabs__item.is-active {
-          background-color: #2b85e4;
-          color: white;
+          background-color: #ffffff;
+          color: $apple-blue !important;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+          font-weight: 600;
         }
       }
     }
   }
 
-  .category-title {
-    font-size: 16px;
-    padding-left: 20px;
-    color: #515a6e;
+  /**
+   * 分区标题：介于侧栏 14px 与卡片标题 15px 之间略大一级（~19px），
+   * 避免过大 Display 字号造成与正文比例失调（对齐 DESIGN 层级感）
+   */
+  .nav-home-category__title {
+    font-size: $home-section-title-size;
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: -0.15px;
+    padding: 6px 2px 8px;
+    color: $apple-text-primary;
   }
 }
 
 .blink-box {
-  animation: glow 800ms ease-out infinite alternate;
+  animation: home-section-pulse 1.2s ease-out 2 alternate;
 }
 
-@keyframes glow {
+@keyframes home-section-pulse {
   0% {
-    border-color: red;
-    box-shadow: 0 0 5px rgba(255, 0, 0, .2), inset 0 0 5px rgba(255, 0, 0, .1), 0 0 0 red;
+    box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.25);
   }
   100% {
-    border-color: red;
-    box-shadow: 0 0 20px rgba(255, 0, 0, .6), inset 0 0 10px rgba(255, 0, 0, .4), 0 0 0 red;
+    box-shadow: 0 0 0 6px rgba(0, 113, 227, 0);
   }
-}
-</style>
-
-<style lang="scss">
-// fix css style bug in open el-dialog
-//.el-popup-parent--hidden {
-//  .fixed-header {
-//    padding-right: 6px;
-//  }
-//}
-
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #c0c0c0;
-  border-radius: 3px;
 }
 </style>

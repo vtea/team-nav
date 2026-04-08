@@ -5,7 +5,7 @@ import com.tuituidan.openhub.bean.entity.EmailSetting;
 import com.tuituidan.openhub.bean.entity.Setting;
 import com.tuituidan.openhub.service.EmailSettingService;
 import com.tuituidan.openhub.service.SettingService;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;

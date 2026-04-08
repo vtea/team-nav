@@ -1,0 +1,17 @@
+/**
+ * 后台表格「操作」列：与工具栏 `el-button` plain + small 同一视觉体系，
+ * 行内使用 `size="mini"`。在列模板外包一层：
+ * `<div class="table-operation-btns">...</div>`
+ */
+.table-operation-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+/** 与侧栏同页的表格操作区左对齐（可选） */
+.table-operation-btns--start {
+  justify-content: flex-start;
+}

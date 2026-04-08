@@ -112,39 +112,43 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" min-width="300" class-name="small-padding">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="openDialog(scope.row)"
-          >修改
-          </el-button>
-          <el-button
-            v-if="scope.row.level<3"
-            size="mini"
-            type="text"
-            icon="el-icon-plus"
-            @click="openDialog({pid:scope.row.id})"
-          >新增
-          </el-button>
-          <el-button
-            slot="reference"
-            size="mini"
-            type="text"
-            icon="el-icon-remove-outline"
-            @click="handleRemove(scope.row)"
-          >移除
-          </el-button>
-          <el-button
-            slot="reference"
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除
-          </el-button>
+          <div class="table-operation-btns">
+            <el-button
+              type="primary"
+              plain
+              size="mini"
+              icon="el-icon-edit"
+              @click="openDialog(scope.row)"
+            >修改
+            </el-button>
+            <el-button
+              v-if="scope.row.level<3"
+              type="success"
+              plain
+              size="mini"
+              icon="el-icon-plus"
+              @click="openDialog({pid:scope.row.id})"
+            >新增
+            </el-button>
+            <el-button
+              type="warning"
+              plain
+              size="mini"
+              icon="el-icon-remove-outline"
+              @click="handleRemove(scope.row)"
+            >移除
+            </el-button>
+            <el-button
+              type="danger"
+              plain
+              size="mini"
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row)"
+            >删除
+            </el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -240,6 +244,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>

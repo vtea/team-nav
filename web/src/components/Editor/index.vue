@@ -3,12 +3,9 @@
 </template>
 
 <script>
-import Quill from "quill";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-import 'quill-emoji/dist/quill-emoji.css'
-import  quillEmoji  from 'quill-emoji';
+import Quill from 'quill'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
 
 export default {
   name: "Editor",
@@ -53,16 +50,16 @@ export default {
         bounds: document.body,
         debug: "warn",
         modules: {
-          'emoji-toolbar': true,
-          // 工具栏配置
+          /**
+           * 未使用 quill-emoji：其依赖含数 MB 位图，会显著增大构建产物。
+           */
           toolbar: [
-            ["bold", "italic", "underline", "strike"],       // 加粗 斜体 下划线 删除线
-            [{size: ["small", false, "large", "huge"]}],   // 字体大小
-            [{header: [1, 2, 3, 4, 5, 6, false]}],         // 标题
-            [{color: []}, {background: []}],             // 字体颜色、字体背景颜色
-            ["emoji"],//表情包
-            ["clean"],                                       // 清除文本格式
-          ],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ size: ['small', false, 'large', 'huge'] }],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ color: [] }, { background: [] }],
+            ['clean']
+          ]
         },
         placeholder: "请输入内容",
         readOnly: this.readOnly,
@@ -101,21 +98,23 @@ export default {
     this.Quill = null;
   },
   methods: {
+    /**
+     * 初始化 Quill 实例并同步 v-model。
+     */
     init() {
-      const editor = this.$refs.editor;
-      this.Quill = new Quill(editor, this.options);
-      this.Quill.pasteHTML(this.currentValue);
-      this.$emit("on-change", this.Quill.getText().replace('\n', ''));
-      this.Quill.on("text-change", (delta, oldDelta, source) => {
-        const html = this.$refs.editor.children[0].innerHTML;
-        const text = this.Quill.getText().replace('\n', '');
-        this.currentValue = html;
-        this.$emit("input", html);
-        this.$emit("on-change", text);
-      });
-      this.Quill.register && this.Quill.register('modules/quillEmoji', quillEmoji);
-    },
-  },
+      const editor = this.$refs.editor
+      this.Quill = new Quill(editor, this.options)
+      this.Quill.pasteHTML(this.currentValue)
+      this.$emit('on-change', this.Quill.getText().replace('\n', ''))
+      this.Quill.on('text-change', () => {
+        const html = this.$refs.editor.children[0].innerHTML
+        const text = this.Quill.getText().replace('\n', '')
+        this.currentValue = html
+        this.$emit('input', html)
+        this.$emit('on-change', text)
+      })
+    }
+  }
 };
 </script>
 

@@ -84,29 +84,34 @@
       <el-table-column label="标题" align="center" prop="title" show-overflow-tooltip/>
       <el-table-column label="内容" align="center" prop="content" show-overflow-tooltip/>
       <el-table-column label="链接" align="center" prop="url" show-overflow-tooltip/>
-      <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" min-width="260" class-name="small-padding">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-document-copy"
-            @click="openDialog(scope.row, true)"
-          >复制
-          </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="openDialog(scope.row)"
-          >修改
-          </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除
-          </el-button>
+          <div class="table-operation-btns">
+            <el-button
+              type="info"
+              plain
+              size="mini"
+              icon="el-icon-document-copy"
+              @click="openDialog(scope.row, true)"
+            >复制
+            </el-button>
+            <el-button
+              type="primary"
+              plain
+              size="mini"
+              icon="el-icon-edit"
+              @click="openDialog(scope.row)"
+            >修改
+            </el-button>
+            <el-button
+              type="danger"
+              plain
+              size="mini"
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row)"
+            >删除
+            </el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>

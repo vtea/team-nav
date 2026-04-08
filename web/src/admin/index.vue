@@ -1,8 +1,8 @@
 <template>
-  <div :class="classObj" class="app-wrapper" :style="{'--current-color': '#409EFF'}">
-    <sidebar v-if="!sidebar.hide" class="sidebar-container"/>
-    <div :class="{sidebarHide:sidebar.hide}" class="main-container">
-      <div class="fixed-header">
+  <div :class="classObj" class="nav-app-shell nav-app-shell--admin">
+    <sidebar v-if="!sidebar.hide" class="nav-sidebar"/>
+    <div :class="{'nav-app-shell__main--sidebar-hidden': sidebar.hide}" class="nav-app-shell__main">
+      <div class="nav-app-shell__header">
         <navbar/>
       </div>
       <app-main/>
@@ -14,7 +14,6 @@
 import { AppMain, Navbar, Sidebar } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
-import variables from '@/assets/styles/variables.scss'
 
 export default {
   name: 'Layout',
@@ -32,15 +31,12 @@ export default {
     }),
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        'nav-app-shell--sidebar-collapsed': !this.sidebar.opened,
+        'nav-app-shell--sidebar-expanded': this.sidebar.opened,
+        'nav-app-shell--no-animation': this.sidebar.withoutAnimation,
+        'nav-app-shell--mobile': this.device === 'mobile'
       }
     },
-    variables() {
-      return variables;
-    }
   },
   methods: {
     handleClickOutside() {
@@ -54,13 +50,13 @@ export default {
   @import "~@/assets/styles/mixin.scss";
   @import "~@/assets/styles/variables.scss";
 
-  .app-wrapper {
+  .nav-app-shell {
     @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
 
-    &.mobile.openSidebar {
+    &.nav-app-shell--mobile.nav-app-shell--sidebar-expanded {
       position: fixed;
       top: 0;
     }
@@ -76,7 +72,7 @@ export default {
     z-index: 999;
   }
 
-  .fixed-header {
+  .nav-app-shell__header {
     position: fixed;
     top: 0;
     right: 0;
@@ -85,15 +81,15 @@ export default {
     transition: width 0.28s;
   }
 
-  .hideSidebar .fixed-header {
+  .nav-app-shell--sidebar-collapsed .nav-app-shell__header {
     width: calc(100% - 54px);
   }
 
-  .sidebarHide .fixed-header {
+  .nav-app-shell__main--sidebar-hidden .nav-app-shell__header {
     width: 100%;
   }
 
-  .mobile .fixed-header {
+  .nav-app-shell--mobile .nav-app-shell__header {
     width: 100%;
   }
 </style>

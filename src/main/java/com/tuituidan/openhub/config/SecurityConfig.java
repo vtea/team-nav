@@ -1,8 +1,9 @@
 package com.tuituidan.openhub.config;
 
 import com.tuituidan.openhub.service.UserService;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,22 +48,24 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().disable();
-        http.csrf().disable();
+        http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
+        http.csrf(csrf -> csrf.disable());
         http.userDetailsService(userService);
 
         setLogin(http.formLogin());
         setLogout(http.logout());
 
-        http.authorizeRequests()
-                .antMatchers(securityProperties.getPermitUrl()).permitAll()
-                .antMatchers(securityProperties.getGeneralUserUrl()).authenticated()
-                .antMatchers("/api/v1/**").hasAuthority("admin")
+        String[] permitUrls = Objects.requireNonNullElse(securityProperties.getPermitUrl(), new String[0]);
+        String[] generalUrls = Objects.requireNonNullElse(securityProperties.getGeneralUserUrl(), new String[0]);
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(permitUrls).permitAll()
+                .requestMatchers(generalUrls).authenticated()
+                .requestMatchers("/api/v1/**").hasAuthority("admin")
                 .anyRequest()
-                .permitAll();
-        http.exceptionHandling().defaultAuthenticationEntryPointFor((request, response, ex) ->
+                .permitAll());
+        http.exceptionHandling(ex -> ex.defaultAuthenticationEntryPointFor((request, response, ex2) ->
                         response.sendError(HttpServletResponse.SC_UNAUTHORIZED),
-                request -> "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With")));
+                request -> "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"))));
         return http.build();
     }
 

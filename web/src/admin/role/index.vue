@@ -1,11 +1,11 @@
 <template>
-  <div class="app-container">
-    <el-row>
-      <el-col :span="8">
+  <div class="app-container role-page">
+    <el-row :gutter="20" class="role-page__stack">
+      <el-col :span="24">
         <role-list @roleRowChange="roleRowChange"></role-list>
       </el-col>
-      <el-col :span="7" :offset="1">
-        <el-card shadow="never">
+      <el-col :span="24">
+        <el-card shadow="never" class="role-page__card role-page__card--tree">
           <div slot="header" class="card-header">
             <span>拥有分类</span>
             <el-button
@@ -29,7 +29,7 @@
           </el-tree>
         </el-card>
       </el-col>
-      <el-col :span="7" :offset="1">
+      <el-col :span="24">
         <el-card shadow="never" class="user-table-card">
           <div slot="header" class="card-header">
             <span>拥有用户</span>
@@ -162,6 +162,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+/** 单列自上而下：角色列表 → 拥有分类 → 拥有用户 */
+.role-page__stack > .el-col + .el-col {
+  margin-top: 16px;
+}
+
+.role-page__card--tree ::v-deep .el-card__body {
+  max-height: 420px;
+  overflow: auto;
+}
+
 ::v-deep .el-card__header {
   padding: 11px 15px;
 }

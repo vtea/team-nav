@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 @mixin clearfix {
   &:after {
     content: "";
@@ -6,18 +8,22 @@
   }
 }
 
+/**
+ * 元素内滚动条（与全局 ::-webkit-scrollbar 视觉一致，见 index.scss）
+ */
 @mixin scrollBar {
-  &::-webkit-scrollbar-track-piece {
-    background: #d3dce6;
-  }
-
   &::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $apple-scrollbar-track;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #99a9bf;
-    border-radius: 20px;
+    background-color: $apple-scrollbar-thumb;
+    border-radius: 3px;
   }
 }
 

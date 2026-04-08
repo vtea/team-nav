@@ -7,7 +7,7 @@ import com.tuituidan.openhub.bean.vo.HomeDataVo;
 import com.tuituidan.openhub.consts.Consts;
 import com.tuituidan.openhub.service.CardService;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

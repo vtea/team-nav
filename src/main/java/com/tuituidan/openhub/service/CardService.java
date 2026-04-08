@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -83,15 +83,38 @@ public class CardService {
     private RestTemplate restTemplate;
 
     /**
-     * 首页查询
+     * 首页查询：左侧菜单始终为全量分类树；主内容区 {@code datas} 按关键词过滤卡片。
      *
-     * @param keywords keywords
-     * @return List
+     * @param keywords 卡片关键字，空则展示全部分类与卡片
+     * @return 菜单树 + 主区分类块列表
      */
     public HomeDataVo tree(String keywords) {
-        List<CategoryVo> categoryList = getCategoryWithCard(keywords);
-        if (CollectionUtils.isEmpty(categoryList)) {
+        List<CategoryVo> fullCategoryList = getCategoryWithCard("");
+        if (CollectionUtils.isEmpty(fullCategoryList)) {
             return new HomeDataVo(Collections.emptyList(), Collections.emptyList());
+        }
+        List<CategoryVo> rightListForMenus = buildRightListFromCategories(fullCategoryList);
+        Collection<CategoryVo> menus = buildMenus(rightListForMenus);
+        List<CategoryVo> menusTree = ListUtils.buildTree(menus);
+
+        List<CategoryVo> dataCategoryList = StringUtils.isBlank(keywords)
+                ? fullCategoryList
+                : getCategoryWithCard(keywords);
+        List<CategoryVo> rightListForData = buildRightListFromCategories(
+                CollectionUtils.isEmpty(dataCategoryList) ? Collections.emptyList() : dataCategoryList);
+
+        return new HomeDataVo(menusTree, rightListForData);
+    }
+
+    /**
+     * 将「含卡片的分类扁平列表」整理为主区展示用的 {@code rightList}（含二级分组等逻辑）。
+     *
+     * @param categoryList {@link #getCategoryWithCard(String)} 的结果
+     * @return 已按 {@code flatSort} 排序的主区分块列表
+     */
+    private List<CategoryVo> buildRightListFromCategories(List<CategoryVo> categoryList) {
+        if (CollectionUtils.isEmpty(categoryList)) {
+            return new ArrayList<>();
         }
         List<CategoryVo> rightList = new ArrayList<>();
         Map<String, CategoryVo> lowMap = new HashMap<>();
@@ -112,9 +135,8 @@ public class CardService {
             item.getChildren().sort(Comparator.comparing(CategoryVo::getFlatSort));
             rightList.add(item);
         }
-        Collection<CategoryVo> menus = buildMenus(rightList);
         rightList.sort(Comparator.comparing(CategoryVo::getFlatSort));
-        return new HomeDataVo(ListUtils.buildTree(menus), rightList);
+        return rightList;
     }
 
     private List<CategoryVo> getCategoryWithCard(String keywords) {
@@ -328,7 +350,13 @@ public class CardService {
         if (CardTypeEnum.DYNAMIC_HTTP.getType().equals(card.getType())) {
             CardDynamicBuilder builder = card.getDynamicBuilder();
             Assert.notNull(builder, "数据异常，动态内容构建为空");
-            HttpMethod httpMethod = HttpMethod.resolve(builder.getHttpMethod());
+            String methodName = StringUtils.upperCase(StringUtils.trimToEmpty(builder.getHttpMethod()));
+            HttpMethod httpMethod;
+            try {
+                httpMethod = HttpMethod.valueOf(methodName);
+            } catch (IllegalArgumentException ex) {
+                httpMethod = null;
+            }
             Assert.notNull(httpMethod, "http-method异常");
             String body;
             try {

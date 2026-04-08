@@ -3,19 +3,24 @@
 * So I modified the default color and you can modify it to your liking.
 **/
 
-/* theme color */
-$--color-primary: #1890ff;
+/* theme color — Apple Blue（交互主色） */
+$--color-primary: #0071e3;
 $--color-success: #13ce66;
 $--color-warning: #ffba00;
 $--color-danger: #ff4949;
-// $--color-info: #1E1E1E;
 
 $--button-font-weight: 400;
 
-// $--color-text-regular: #1f2d3d;
+$--color-text-primary: #1d1d1f;
+$--color-text-regular: rgba(0, 0, 0, 0.8);
+$--color-text-secondary: rgba(0, 0, 0, 0.48);
+$--color-text-placeholder: rgba(0, 0, 0, 0.48);
 
-$--border-color-light: #dfe4ed;
-$--border-color-lighter: #e6ebf5;
+$--border-radius-base: 8px;
+$--border-radius-small: 6px;
+
+$--border-color-light: rgba(0, 0, 0, 0.08);
+$--border-color-lighter: rgba(0, 0, 0, 0.06);
 
 $--table-border: 1px solid #dfe6ec;
 

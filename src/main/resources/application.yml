@@ -18,13 +18,19 @@ spring:
       name: admin
       roles: admin
       password: 123456
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+# 安全 URL 白名单（独立前缀，勿合并到 spring.security，避免与 Boot 默认绑定冲突）
+nav:
+  security:
     general-user-url:
       - /api/v1/card/icons
       - /api/v1/card/icon
       - /api/v1/card
       - /api/v1/upload/*
       - /api/v1/category/tree
-      - /api/v1/app/version
       - /api/v1/user/password
       - /api/v1/datasource
     permit-url:
@@ -36,14 +42,12 @@ spring:
       - /api/v1/attachment/*/actions/download
       - /api/v1/card/*/dynamic/content
       - /api/v1/setting
+      - /api/v1/app/version
       - /api/v1/quick/login
       - /api/v1/login/user
       - /api/v1/user/star/card
       - /login
-  jackson:
-    time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss
-    default-property-inclusion: non_null
+
 # 日志相关的配置，还有些问题，后续要改成xml的方式来配置.
 logging:
   file:

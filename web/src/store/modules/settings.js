@@ -1,9 +1,19 @@
 import http from '@/plugins/http';
 
-const storageSetting = JSON.parse(localStorage.getItem('layout-setting')) || ''
+let storageSetting = {}
+try {
+  const raw = localStorage.getItem('layout-setting')
+  storageSetting = raw ? JSON.parse(raw) : {}
+} catch (e) {
+  storageSetting = {}
+}
+
 const state = {
   title: process.env.VUE_APP_TITLE,
-  sideTheme: storageSetting.sideTheme || 'theme-dark',
+  /** 侧栏激活项与 CSS 变量 --current-color，对齐 Apple Blue */
+  theme: storageSetting.theme || '#0071e3',
+  /** 默认浅色侧栏，对齐工具目录站布局 */
+  sideTheme: storageSetting.sideTheme || 'theme-light',
   showSettings: false,
   cutOverSpeed: 10,
   logoPath: '/assets/images/logo.png',

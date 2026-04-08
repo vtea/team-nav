@@ -5,7 +5,7 @@ import com.tuituidan.openhub.bean.entity.Role;
 import com.tuituidan.openhub.bean.vo.RoleVo;
 import com.tuituidan.openhub.service.RoleService;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

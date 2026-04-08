@@ -8,18 +8,79 @@ $tiffany: #4AB7BD;
 $yellow:#FEC171;
 $panGreen: #30B08F;
 
-// 默认菜单主题风格
-$base-menu-color:#bfcbd9;
-$base-menu-color-active:rgb(191, 203, 217);
-$base-menu-background:#05264c;
+/** Apple 风格设计令牌（与 docs/apple/DESIGN.md 对齐） */
+$apple-blue: #0071e3;
+$apple-blue-hover: #0077ed;
+$apple-link-blue: #0066cc;
+$apple-link-bright: #2997ff;
+/** 全局画布（侧栏与主区同一色，避免相邻灰块色差） */
+$apple-bg-page: #f5f5f7;
+$apple-surface: #ffffff;
+$apple-text-primary: #1d1d1f;
+/** 正文/次要：DESIGN.md Black 80% */
+$apple-text-secondary: rgba(0, 0, 0, 0.8);
+/** 三级辅助文案：Black 48% */
+$apple-text-tertiary: rgba(0, 0, 0, 0.48);
+/** 弱图标/占位：约 32% */
+$apple-text-muted: rgba(0, 0, 0, 0.32);
+/** 悬停时星标旁等：约 50% */
+$apple-text-subtle: rgba(0, 0, 0, 0.5);
+/** 浅底悬停（星标按钮等） */
+$apple-overlay-hover-light: rgba(0, 0, 0, 0.05);
+/** 首页卡片「常用」星标金色 */
+$apple-star-gold: #c9a227;
+
+$apple-filter-btn-bg: #fafafc;
+$navbar-height: 48px;
+/** 主内容区全局最大宽度（与侧栏并列时主区居中） */
+$app-content-max-width: 1600px;
+/** 线与弱分割（搜索框、卡片、顶栏共用） */
+$apple-border-hairline: rgba(0, 0, 0, 0.07);
+/** 导航卡片悬停：Apple Blue 半透明描边 */
+$apple-blue-border-soft: rgba(0, 113, 227, 0.32);
+/** 导航卡片悬停：浅蓝底 */
+$apple-blue-surface-hover: rgba(0, 113, 227, 0.07);
+/** 首页导航卡片阴影（与画布对比） */
+$apple-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.05);
+$apple-card-shadow-hover-blue: 0 2px 12px rgba(0, 113, 227, 0.12);
+/** 导航卡片与 logo 圆角（category-children 与令牌共用） */
+$nav-card-radius: 12px;
+$nav-card-logo-radius: 14px;
+/** 全局滚动条（与 admin/home AppMain 原样式一致） */
+$apple-scrollbar-track: rgba(0, 0, 0, 0.04);
+$apple-scrollbar-thumb: rgba(0, 0, 0, 0.22);
+
+/** 浅色毛玻璃（对齐 DESIGN.md 导航玻璃：saturate + blur） */
+$apple-glass-fill: rgba(255, 255, 255, 0.72);
+$apple-glass-fill-hover: rgba(255, 255, 255, 0.88);
+$apple-glass-border: rgba(0, 0, 0, 0.08);
+$apple-glass-border-hover: rgba(0, 0, 0, 0.1);
+$apple-glass-edge: rgba(0, 0, 0, 0.07);
+
+/** 首页主区内文字阶（与卡片、侧栏成比例） */
+$home-section-title-size: 19px;
+$home-card-title-size: 15px;
+$home-card-body-size: 13px;
+/** 大卡片模式下列标题/正文（large-layout-container） */
+$home-card-title-size-large: 17px;
+$home-card-body-size-large: 14px;
+/** 浅色侧栏底：与 $apple-bg-page 一致，仅靠阴影与主区分层 */
+$home-sidebar-light-bg: $apple-bg-page;
+/** 首页侧栏菜单字号（需大于主区 14px 辅助文案，避免显得过细） */
+$home-sidebar-menu-font-size: 16px;
+
+// 默认菜单主题风格（深色侧栏：近黑底 + 浅灰字）
+$base-menu-color: rgba(255, 255, 255, 0.8);
+$base-menu-color-active: #ffffff;
+$base-menu-background: #000000;
 $base-logo-title-color: #ffffff;
 
-$base-menu-light-color:rgba(0,0,0,.70);
-$base-menu-light-background:#ffffff;
-$base-logo-light-title-color: #001529;
+$base-menu-light-color: rgba(0, 0, 0, 0.55);
+$base-menu-light-background: $home-sidebar-light-bg;
+$base-logo-light-title-color: $apple-text-primary;
 
-$base-sub-menu-background:#05264c;
-$base-sub-menu-hover:#001528;
+$base-sub-menu-background: #272729;
+$base-sub-menu-hover: #2a2a2d;
 $base-sidebar-width: 200px;
 
 
@@ -50,5 +111,9 @@ $base-sub-menu-hover:#001528;
   subMenuHover: $base-sub-menu-hover;
   sideBarWidth: $base-sidebar-width;
   logoTitleColor: $base-logo-title-color;
-  logoLightTitleColor: $base-logo-light-title-color
+  logoLightTitleColor: $base-logo-light-title-color;
+  appleBlue: $apple-blue;
+  appleLinkBlue: $apple-link-blue;
+  appleBgPage: $apple-bg-page;
+  appleTextPrimary: $apple-text-primary;
 }

@@ -1,6 +1,6 @@
 # 网站导航服务
 
-<img src="https://img.shields.io/badge/springboot-2.7.3-brightgreen" alt="springboot"/>   <img src="https://img.shields.io/badge/jdk-1.8-blue" alt="java"/>   <img src="https://img.shields.io/badge/vue-2.6.12-blueviolet" alt="vue"/>   <img src="https://img.shields.io/badge/elementui-2.15.14-brown" alt="element-ui"/>   <img src="https://img.shields.io/badge/h2database-2.1.214-yellow" alt="java"/> 
+<img src="https://img.shields.io/badge/springboot-3.4.x-brightgreen" alt="springboot"/>   <img src="https://img.shields.io/badge/jdk-21-blue" alt="java"/>   <img src="https://img.shields.io/badge/vue-2.6.12-blueviolet" alt="vue"/>   <img src="https://img.shields.io/badge/elementui-2.15.14-brown" alt="element-ui"/>   <img src="https://img.shields.io/badge/h2database-2.x-yellow" alt="h2"/> 
 
 ## 简介
 
@@ -89,11 +89,15 @@ vue2+ElementUI，前后端分离开发，合并部署（1.x版本UI框架是View
 
 #### 后端主要技术
 
-Springboot、SpringDataJpa、SpringSecurity、h2database
+Spring Boot 3、Spring Data JPA、Spring Security 6、h2database（默认）
+
+**运行与构建要求：JDK 21（LTS）**、Maven 3.9+。若使用较新的 JDK（如 25）编译，请使用 pom 中配置的较新 Lombok 注解处理器版本。
 
 ## 部署说明
 
-通过常规maven命令构建，打包执行命令`mvn clean package -Dmaven.npm.skip=false`，会自动将前端构建到后端的jar包中，这样整个服务就一个jar包（当然如果想前后端分离部署也是可以的，这里不再赘述），再无其他依赖服务，仅需要jdk环境即可启动。
+通过常规 Maven 命令构建，打包执行命令 `mvn clean package -Dmaven.npm.skip=false`，会自动将前端构建到后端的 jar 包中，这样整个服务就一个 jar 包（当然如果想前后端分离部署也是可以的，这里不再赘述），再无其他依赖服务，仅需 **JDK 21** 环境即可启动。
+
+> 说明：`pom.xml` 中原有的 `jpack-maven-plugin`（生成 Linux 分发包）已暂时注释，若需恢复请自行验证其与 Spring Boot 3 的兼容性；日常可直接使用 `target/team-nav.jar` 或 Docker 镜像部署。
 
 > 如果已经部署了1.X版本的也是直接用2.0版本的jar启动，或者重新拉取镜像启动即可，数据会自动矫正
 

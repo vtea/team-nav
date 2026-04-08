@@ -1,0 +1,89 @@
+/**
+ * 首页/组件排版与表面 mixin（对齐 variables.scss 与 docs/apple/DESIGN.md）
+ * 供 SFC scoped 中 @import 使用，避免重复大段规则。
+ */
+@import './variables.scss';
+
+/** 首页 el-card 导航卡片：白底、发丝线、阴影 */
+@mixin apple-nav-card-surface {
+  position: relative;
+  cursor: pointer;
+  border-radius: $nav-card-radius;
+  border: 1px solid $apple-border-hairline;
+  background-color: $apple-surface !important;
+  box-shadow: $apple-card-shadow;
+  transition: background-color 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+@mixin apple-nav-card-body-padding {
+  ::v-deep .el-card__body {
+    padding: 14px 14px;
+    background: transparent !important;
+  }
+}
+
+@mixin apple-nav-card-star-default {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  color: $apple-text-muted;
+  transition: color 0.18s ease, background-color 0.18s ease;
+}
+
+@mixin apple-nav-card-title-default {
+  font-size: $home-card-title-size;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.224px;
+  color: $apple-text-primary;
+}
+
+@mixin apple-nav-card-content-default {
+  font-size: $home-card-body-size;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.08px;
+  color: $apple-text-tertiary;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 5px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+@mixin apple-nav-card-hover {
+  border-color: $apple-blue-border-soft;
+  background-color: $apple-blue-surface-hover !important;
+  box-shadow: $apple-card-shadow-hover-blue;
+}
+
+/** 大卡片模式：标题/副标题字号 */
+@mixin apple-nav-card-title-large-layout {
+  font-size: $home-card-title-size-large !important;
+  letter-spacing: -0.28px !important;
+}
+
+@mixin apple-nav-card-content-large-layout {
+  font-size: $home-card-body-size-large !important;
+  letter-spacing: -0.12px !important;
+}
+
+@mixin apple-text-ellipsis-single-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

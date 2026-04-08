@@ -29,9 +29,11 @@
           </el-link>
           <div>
             <span v-text="data.createTime" style="padding-right: 10px"></span>
-            <el-button type="text"
-                       size="small"
-                       @click="() => removeNode(node, data)">删除
+            <el-button
+              type="danger"
+              plain
+              size="mini"
+              @click="() => removeNode(node, data)">删除
             </el-button>
           </div>
         </div>

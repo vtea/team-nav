@@ -2,15 +2,27 @@
 @import './mixin.scss';
 @import './transition.scss';
 @import './element-ui.scss';
+@import './apple-theme.scss';
 @import './sidebar.scss';
 @import './btn.scss';
+@import './admin-table-operations.scss';
 
 body {
   height: 100%;
+  margin: 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  background-color: $apple-bg-page;
+  color: $apple-text-secondary;
+  /** SF Pro 在 macOS/iOS 上由系统字体栈提供；中文回退见 DESIGN.md */
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+}
+
+*:focus-visible {
+  outline: 2px solid $apple-blue;
+  outline-offset: 2px;
 }
 
 label {
@@ -22,8 +34,18 @@ html {
   box-sizing: border-box;
 }
 
+/**
+ * 根节点最大宽度；translateZ(0) 建立包含块，使侧栏等 position:fixed 相对本容器而非视口
+ */
 #app {
+  max-width: $app-content-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  min-height: 100%;
   height: 100%;
+  position: relative;
+  transform: translateZ(0);
 }
 
 *,
@@ -97,31 +119,39 @@ div:focus {
 }
 
 aside {
-  background: #eef1f6;
+  background: $apple-filter-btn-bg;
   padding: 8px 24px;
   margin-bottom: 20px;
-  border-radius: 2px;
+  border-radius: 8px;
   display: block;
   line-height: 32px;
   font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  color: #2c3e50;
+  font-family: inherit;
+  color: $apple-text-primary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   a {
-    color: #337ab7;
+    color: $apple-link-blue;
     cursor: pointer;
 
     &:hover {
-      color: rgb(32, 160, 255);
+      color: $apple-blue;
     }
   }
 }
 
-//main-container全局样式
+// nav-app-shell__main 内 .app-container 全局样式
 .app-container {
   padding: 20px;
+}
+
+/** 后台管理：内容区白卡片与前台主区层级一致（仅 admin 布局带 nav-app-shell--admin） */
+.nav-app-shell--admin .nav-app-shell__main .app-container {
+  background: $apple-surface;
+  border: 1px solid $apple-border-hairline;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.05);
 }
 
 .components-container {
@@ -145,7 +175,7 @@ aside {
   text-align: right;
   padding-right: 20px;
   transition: 600ms ease position;
-  background: linear-gradient(90deg, rgba(32, 182, 249, 1) 0%, rgba(32, 182, 249, 1) 0%, rgba(33, 120, 241, 1) 100%, rgba(33, 120, 241, 1) 100%);
+  background: $apple-text-primary;
 
   .subtitle {
     font-size: 20px;
@@ -163,11 +193,11 @@ aside {
 
 .link-type,
 .link-type:focus {
-  color: #337ab7;
+  color: $apple-link-blue;
   cursor: pointer;
 
   &:hover {
-    color: rgb(32, 160, 255);
+    color: $apple-blue;
   }
 }
 
@@ -179,4 +209,31 @@ aside {
     vertical-align: middle;
     margin-bottom: 10px;
   }
+}
+
+/**
+ * 前台/后台布局：禁止 body 滚动，仅主内容区滚动（原 home/index.vue 中 body overflow）
+ */
+#app .nav-app-shell {
+  overflow: hidden;
+  height: 100%;
+  /** 与 variables.scss 中 $apple-blue 一致，供子组件 var(--current-color) 使用 */
+  --current-color: #{$apple-blue};
+}
+
+/**
+ * 全局滚动条（原分散在 category-children、home/admin AppMain）
+ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $apple-scrollbar-track;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $apple-scrollbar-thumb;
+  border-radius: 3px;
 }

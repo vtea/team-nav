@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import AdminLayout from '@/admin'
-
 Vue.use(Router)
 
 /**
@@ -35,7 +33,8 @@ export const routeList = [
   {
     path: '/admin',
     name: 'admin',
-    component: AdminLayout,
+    /** 懒加载后台壳，避免首屏拉取 admin 依赖 */
+    component: () => import('@/admin/index.vue'),
     children: [
       {
         path: 'category',

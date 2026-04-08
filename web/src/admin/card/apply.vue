@@ -67,22 +67,26 @@
       <el-table-column label="链接" align="center" prop="url" show-overflow-tooltip/>
       <el-table-column label="申请人" align="center" prop="applyBy" show-overflow-tooltip/>
       <el-table-column label="申请时间" align="center" prop="applyTime" show-overflow-tooltip/>
-      <el-table-column label="操作" align="center" width="140" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" min-width="160" class-name="small-padding">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="openDialog(scope.row)"
-          >审核
-          </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >删除
-          </el-button>
+          <div class="table-operation-btns">
+            <el-button
+              type="primary"
+              plain
+              size="mini"
+              icon="el-icon-edit"
+              @click="openDialog(scope.row)"
+            >审核
+            </el-button>
+            <el-button
+              type="danger"
+              plain
+              size="mini"
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row)"
+            >删除
+            </el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>

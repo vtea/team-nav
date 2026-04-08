@@ -5,7 +5,7 @@ import com.tuituidan.openhub.bean.dto.CardDynamicBuilder;
 import com.tuituidan.openhub.bean.dto.KeyValueDto;
 import com.tuituidan.openhub.consts.AuthTypeEnum;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
+import javax.crypto.SecretKey;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
@@ -271,9 +272,14 @@ public class HttpUtils {
                     .filter(it -> StringUtils.isNoneBlank(it.getKey(), it.getValue())).collect(Collectors.toList());
             Map<String, Object> map = list.stream().collect(Collectors.toMap(KeyValueDto::getKey,
                     KeyValueDto::getValue));
-            SignatureAlgorithm algorithm = SignatureAlgorithm.forName(dynamicBuilder.getJwtAlgorithm());
-            httpHeaders.setBearerAuth(Jwts.builder().setClaims(map).signWith(algorithm,
-                    dynamicBuilder.getJwtSecret()).compact());
+            SecretKey key = Keys.hmacShaKeyFor(dynamicBuilder.getJwtSecret().getBytes(StandardCharsets.UTF_8));
+            String alg = StringUtils.upperCase(StringUtils.trimToEmpty(dynamicBuilder.getJwtAlgorithm()));
+            String compact = switch (alg) {
+                case "HS384" -> Jwts.builder().claims(map).signWith(key, Jwts.SIG.HS384).compact();
+                case "HS512" -> Jwts.builder().claims(map).signWith(key, Jwts.SIG.HS512).compact();
+                default -> Jwts.builder().claims(map).signWith(key, Jwts.SIG.HS256).compact();
+            };
+            httpHeaders.setBearerAuth(compact);
             return httpHeaders;
         }
         return httpHeaders;

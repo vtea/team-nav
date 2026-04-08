@@ -1,0 +1,37 @@
+/**
+ * 全局 UI 细化，对齐 docs/apple/DESIGN.md（Element UI 覆盖与统一圆角/层次）
+ */
+@import './variables.scss';
+
+.el-button {
+  border-radius: 8px;
+  font-weight: 400;
+}
+
+.el-button--primary:hover,
+.el-button--primary:focus {
+  background-color: $apple-blue-hover;
+  border-color: $apple-blue-hover;
+}
+
+.el-input__inner,
+.el-textarea__inner {
+  border-radius: 8px;
+}
+
+.el-dialog {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.22) 3px 5px 30px 0;
+}
+
+.el-message-box {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.el-card {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}

@@ -8,7 +8,7 @@ import com.tuituidan.openhub.task.VersionCheckTask;
 import com.tuituidan.openhub.util.StringExtUtils;
 import java.io.IOException;
 import java.util.List;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -4,7 +4,6 @@
  */
 import ResizeMixin from './mixin/ResizeHandler'
 import {mapState} from 'vuex'
-import variables from '@/assets/styles/variables.scss'
 
 export default {
   name: 'home-index',
@@ -24,15 +23,12 @@ export default {
     }),
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        'nav-app-shell--sidebar-collapsed': !this.sidebar.opened,
+        'nav-app-shell--sidebar-expanded': this.sidebar.opened,
+        'nav-app-shell--no-animation': this.sidebar.withoutAnimation,
+        'nav-app-shell--mobile': this.device === 'mobile'
       }
     },
-    variables() {
-      return variables;
-    }
   },
   mounted() {
     if (localStorage.username

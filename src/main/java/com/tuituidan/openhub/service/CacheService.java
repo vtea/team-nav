@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.ApplicationArguments;

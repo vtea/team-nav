@@ -79,10 +79,12 @@
 	.el-table__header-wrapper, .el-table__fixed-header-wrapper {
 		th {
 			word-break: break-word;
-			background-color: #f8f8f9;
-			color: #515a6e;
+			background-color: #fafafc;
+			color: #1d1d1f;
 			height: 40px;
 			font-size: 13px;
+			font-weight: 600;
+			letter-spacing: -0.12px;
 		}
 	}
 	.el-table__body-wrapper {
@@ -94,11 +96,12 @@
 
 /** 表单布局 **/
 .form-header {
-    font-size:15px;
-	color:#6379bb;
-	border-bottom:1px solid #ddd;
-	margin:8px 10px 25px 10px;
-	padding-bottom:5px
+    font-size: 15px;
+	color: #1d1d1f;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	margin: 8px 10px 25px 10px;
+	padding-bottom: 8px;
+	font-weight: 600;
 }
 
 /** 表格布局 **/
@@ -113,9 +116,9 @@
 /* tree border */
 .tree-border {
     margin-top: 5px;
-    border: 1px solid #e5e6e7;
-    background: #FFFFFF none;
-    border-radius:4px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #ffffff none;
+    border-radius: 8px;
 }
 
 .pagination-container .el-pagination {
@@ -194,25 +197,25 @@
 	margin-bottom: 10px;
 }
 
-/* button color */
+/* button color — 与主色统一（Apple Blue） */
 .el-button--cyan.is-active,
 .el-button--cyan:active {
-  background: #20B2AA;
-  border-color: #20B2AA;
-  color: #FFFFFF;
+  background: #0071e3;
+  border-color: #0071e3;
+  color: #ffffff;
 }
 
 .el-button--cyan:focus,
 .el-button--cyan:hover {
-  background: #48D1CC;
-  border-color: #48D1CC;
-  color: #FFFFFF;
+  background: #0077ed;
+  border-color: #0077ed;
+  color: #ffffff;
 }
 
 .el-button--cyan {
-  background-color: #20B2AA;
-  border-color: #20B2AA;
-  color: #FFFFFF;
+  background-color: #0071e3;
+  border-color: #0071e3;
+  color: #ffffff;
 }
 
 /* text color */
@@ -270,7 +273,7 @@
 .sortable-ghost{
 	opacity: .8;
 	color: #fff!important;
-	background: #42b983!important;
+	background: #0071e3!important;
 }
 
 .top-right-btn {

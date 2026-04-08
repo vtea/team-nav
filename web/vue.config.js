@@ -47,7 +47,13 @@ module.exports = {
     },
     disableHostCheck: true
   },
+  /**
+   * 默认开发环境为 false：各 .vue 的 CSS 以多个 style 标签注入 head，便于 HMR。
+   * 设为 true：开发与生产均提取为外链 CSS（head 中 style 块显著减少），CSS 热更新可能略慢。
+   * 生产构建产物仍以 link rel=stylesheet 引用 static/css/app.*.css（见 dist/index.html）。
+   */
   css: {
+    extract: true,
     loaderOptions: {
       sass: {
         sassOptions: { outputStyle: "expanded" }
@@ -104,7 +110,19 @@ module.exports = {
 
           config.optimization.splitChunks({
             chunks: 'all',
+            /** 默认 maxInitialRequests 过小会导致多出的 cacheGroup（如 chunk-libs）被合并进 app */
+            maxInitialRequests: 8,
+            maxAsyncRequests: 10,
             cacheGroups: {
+              /**
+               * Vue 核心单独成块：业务代码更新时浏览器可复用该文件缓存（总体积不变，首屏解析略分散）。
+               */
+              framework: {
+                name: 'chunk-framework',
+                test: /[\\/]node_modules[\\/](vue|vue-router|vuex)[\\/]/,
+                priority: 15,
+                chunks: 'initial'
+              },
               libs: {
                 name: 'chunk-libs',
                 test: /[\\/]node_modules[\\/]/,
@@ -126,11 +144,7 @@ module.exports = {
             }
           })
 
-          config.optimization.runtimeChunk('single'),
-          {
-             from: path.resolve(__dirname, './public/robots.txt'), //防爬虫文件
-             to: './' //到根目录下
-          }
+          config.optimization.runtimeChunk('single')
     })
   }
 }

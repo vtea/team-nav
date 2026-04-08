@@ -3,7 +3,7 @@ package com.tuituidan.openhub.config;
 import com.tuituidan.openhub.consts.Consts;
 import java.io.File;
 import java.time.Duration;
-import javax.servlet.MultipartConfigElement;
+import jakarta.servlet.MultipartConfigElement;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;

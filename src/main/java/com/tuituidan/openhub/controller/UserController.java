@@ -6,7 +6,7 @@ import com.tuituidan.openhub.bean.entity.User;
 import com.tuituidan.openhub.bean.vo.UserVo;
 import com.tuituidan.openhub.service.UserService;
 import com.tuituidan.openhub.util.SecurityUtils;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

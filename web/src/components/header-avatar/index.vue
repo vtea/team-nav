@@ -20,10 +20,10 @@ export default {
       'loginUser'
     ]),
     avatarColor() {
-      if(this.loginUser.id){
-        return '#409eff';
+      if (this.loginUser.id) {
+        return '#0071e3';
       }
-      return '#ccc'
+      return '#ccc';
     }
   },
 }

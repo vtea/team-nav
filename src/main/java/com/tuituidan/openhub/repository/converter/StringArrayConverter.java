@@ -1,8 +1,8 @@
 package com.tuituidan.openhub.repository.converter;
 
 import java.io.Serializable;
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,14 +1,14 @@
 <template>
-  <div class="has-logo" :style="{ backgroundColor: variables.menuBackground }">
+  <div class="nav-sidebar--with-logo nav-sidebar--shell-admin" :style="{ backgroundColor: menuBg }">
     <logo :collapse="isCollapse"/>
-    <el-scrollbar class="theme-dark" wrap-class="scrollbar-wrapper">
+    <el-scrollbar :class="sideTheme" wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="variables.menuBackground"
-        :text-color="variables.menuColor"
+        :background-color="menuBg"
+        :text-color="menuTextColor"
         :unique-opened="true"
-        active-text-color="#409EFF"
+        :active-text-color="variables.appleBlue"
         :collapse-transition="false"
         mode="vertical"
       >
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapState} from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/assets/styles/variables.scss";
@@ -93,7 +93,18 @@ export default {
     }
   },
   computed: {
+    ...mapState(["settings"]),
     ...mapGetters(["sidebar"]),
+    /** 与首页一致：默认浅色侧栏，可在布局设置中切换深色 */
+    sideTheme() {
+      return this.settings.sideTheme;
+    },
+    menuBg() {
+      return this.sideTheme === "theme-dark" ? variables.menuBackground : variables.menuLightBackground;
+    },
+    menuTextColor() {
+      return this.sideTheme === "theme-dark" ? variables.menuColor : variables.menuLightColor;
+    },
     activeMenu() {
       const route = this.$route;
       const {meta, path} = route;

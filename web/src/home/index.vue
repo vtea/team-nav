@@ -1,9 +1,9 @@
 <template>
-  <div :class="classObj" class="app-wrapper" :style="{'--current-color': '#409EFF'}">
+  <div :class="classObj" class="nav-app-shell">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
-    <sidebar v-if="!sidebar.hide" class="sidebar-container"/>
-    <div :class="{sidebarHide:sidebar.hide}" class="main-container">
-      <div class="fixed-header">
+    <sidebar v-if="!sidebar.hide" class="nav-sidebar"/>
+    <div :class="{'nav-app-shell__main--sidebar-hidden': sidebar.hide}" class="nav-app-shell__main">
+      <div class="nav-app-shell__header">
         <navbar/>
       </div>
       <app-main />
@@ -20,13 +20,13 @@
 @import "~@/assets/styles/mixin.scss";
 @import "~@/assets/styles/variables.scss";
 
-.app-wrapper {
+.nav-app-shell {
   @include clearfix;
   position: relative;
   height: 100%;
   width: 100%;
 
-  &.mobile.openSidebar {
+  &.nav-app-shell--mobile.nav-app-shell--sidebar-expanded {
     position: fixed;
     top: 0;
   }
@@ -42,27 +42,18 @@
   z-index: 999;
 }
 
-.fixed-header {
+.nav-app-shell__header {
   position: relative;
   z-index: 9;
   width: 100%;
   transition: width 0.28s;
 }
 
-//.hideSidebar .fixed-header {
-//  width: calc(100% - 54px);
-//}
-
-.sidebarHide .fixed-header {
+.nav-app-shell__main--sidebar-hidden .nav-app-shell__header {
   width: 100%;
 }
 
-.mobile .fixed-header {
+.nav-app-shell--mobile .nav-app-shell__header {
   width: 100%;
-}
-</style>
-<style lang="scss">
-body {
-  overflow: hidden;
 }
 </style>

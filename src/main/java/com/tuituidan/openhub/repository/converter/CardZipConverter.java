@@ -3,8 +3,8 @@ package com.tuituidan.openhub.repository.converter;
 import com.alibaba.fastjson.JSON;
 import com.tuituidan.openhub.bean.dto.CardZipDto;
 import java.io.Serializable;
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 /**
  * CardZipConverter.

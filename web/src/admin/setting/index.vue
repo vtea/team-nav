@@ -49,7 +49,9 @@ export default {
   margin-top: 10px;
 }
 
+/** 与上方「卡片图标上传」同宽：左列固定 490px，右列占满剩余 */
 .card-data-backup {
+  width: calc(100% - 500px);
   margin-left: 10px;
   margin-top: 10px;
 }

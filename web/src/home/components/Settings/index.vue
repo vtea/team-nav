@@ -10,7 +10,7 @@
             <div class="setting-drawer-block-checbox-item" @click="handleTheme('theme-dark')">
               <img src="@/assets/images/dark.svg" alt="dark">
               <div v-if="sideTheme === 'theme-dark'" class="setting-drawer-block-checbox-selectIcon"
-                   style="display: block;">
+              >
                 <i aria-label="图标: check" class="anticon anticon-check">
                   <svg viewBox="64 64 896 896" data-icon="check" width="1em" height="1em" :fill="theme"
                        aria-hidden="true" focusable="false" class="">
@@ -23,7 +23,7 @@
             <div class="setting-drawer-block-checbox-item" @click="handleTheme('theme-light')">
               <img src="@/assets/images/light.svg" alt="light">
               <div v-if="sideTheme === 'theme-light'" class="setting-drawer-block-checbox-selectIcon"
-                   style="display: block;">
+              >
                 <i aria-label="图标: check" class="anticon anticon-check">
                   <svg viewBox="64 64 896 896" data-icon="check" width="1em" height="1em" :fill="theme"
                        aria-hidden="true" focusable="false" class="">
@@ -71,7 +71,7 @@
 export default {
   data() {
     return {
-      theme: '#409EFF',
+      theme: '#0071e3',
       sideTheme: this.$store.state.settings.sideTheme
     };
   },
@@ -139,6 +139,7 @@ export default {
       this.$cache.local.set(
         "layout-setting",
         `{
+            "theme":"${this.$store.state.settings.theme}",
             "sideTheme":"${this.sideTheme}",
             "menuDefaultOpen":"${this.$store.state.settings.menuDefaultOpen}",
             "menuAccordion":"${this.$store.state.settings.menuAccordion}",
@@ -158,13 +159,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/styles/variables.scss";
+
 .setting-drawer-content {
   .setting-drawer-title {
     margin-bottom: 12px;
-    color: rgba(0, 0, 0, .85);
+    color: $apple-text-primary;
     font-size: 14px;
     line-height: 22px;
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: -0.12px;
   }
 
   .setting-drawer-block-checbox {
@@ -177,7 +181,7 @@ export default {
     .setting-drawer-block-checbox-item {
       position: relative;
       margin-right: 16px;
-      border-radius: 2px;
+      border-radius: 8px;
       cursor: pointer;
 
       img {
@@ -186,6 +190,7 @@ export default {
       }
 
       .setting-drawer-block-checbox-selectIcon {
+        display: block;
         position: absolute;
         top: 0;
         right: 0;
@@ -193,7 +198,7 @@ export default {
         height: 100%;
         padding-top: 15px;
         padding-left: 24px;
-        color: #1890ff;
+        color: #0071e3;
         font-weight: 700;
         font-size: 14px;
       }
@@ -209,13 +214,15 @@ export default {
 
   .drawer-title {
     margin-bottom: 12px;
-    color: rgba(0, 0, 0, .85);
+    color: $apple-text-primary;
     font-size: 14px;
     line-height: 22px;
+    font-weight: 600;
+    letter-spacing: -0.12px;
   }
 
   .drawer-item {
-    color: rgba(0, 0, 0, .65);
+    color: rgba(0, 0, 0, 0.55);
     font-size: 14px;
     padding: 12px 0;
     display: flex;

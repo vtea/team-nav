@@ -1,11 +1,11 @@
 <template>
-  <el-card>
+  <el-card class="data-backup-card">
     <div slot="header" class="card-title">
       <span>数据导入导出</span>
     </div>
     <div>
       <el-divider content-position="left">数据备份/还原</el-divider>
-      <div class="backup-panel">
+      <div class="backup-panel backup-panel--actions">
         <el-button type="primary"
                    class="backup-item"
                    icon="el-icon-download"
@@ -22,7 +22,7 @@
         </file-uploader>
       </div>
       <el-divider content-position="left">浏览器书签导入</el-divider>
-      <div class="backup-panel">
+      <div class="backup-panel backup-panel--actions">
         <file-uploader type="bookmark"
                        accept="text/html"
                        :file-list="[]"
@@ -77,14 +77,33 @@ export default {
 <style scoped lang="scss">
 .backup-panel {
   margin-bottom: 80px;
-  overflow: hidden;
+}
 
-  .backup-item {
-    float: right;
+/** 横向排列用 flex，避免 float + 宽容器把按钮拉满一行导致内容贴左 */
+.backup-panel--actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+</style>
+
+<!-- 不用 scoped：穿透子组件 file-uploader 内 el-upload / el-button，保证居中生效 -->
+<style lang="scss">
+.data-backup-card .backup-panel {
+  .el-upload {
+    display: inline-block;
+    width: auto !important;
+    vertical-align: middle;
   }
 
-  .backup-item.el-button {
-    float: left;
+  .el-button {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: auto;
+    min-width: unset;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 package com.tuituidan.openhub.controller;
 
 import com.tuituidan.openhub.util.RequestUtils;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

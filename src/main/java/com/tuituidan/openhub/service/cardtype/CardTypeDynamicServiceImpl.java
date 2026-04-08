@@ -14,7 +14,7 @@ import com.tuituidan.openhub.util.FileExtUtils;
 import com.tuituidan.openhub.util.StringExtUtils;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.statement.select.SelectItem;
