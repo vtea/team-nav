@@ -23,6 +23,8 @@ public class WebAppConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/ext-resources/**")
                 .addResourceLocations(StringExtUtils.format("file:{}/ext-resources/",
                         Consts.ROOT_DIR));
+        // 旧地址 /images/** 由 LegacyImageForwardController 转发到 /ext-resources/images/**，
+        // 避免与 Boot 默认 classpath:/static/** 抢映射。
     }
 
     @Override
