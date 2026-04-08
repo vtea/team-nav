@@ -107,7 +107,9 @@ Spring Boot 3、Spring Data JPA、Spring Security 6、h2database（默认）
 
 #### 方式二：docker部署
 
-docker启动
+在项目根目录执行 `docker build -t team-nav:local .` 即可构建镜像（多阶段 Dockerfile 会在镜像内完成前端 `npm` 构建与 Maven 打包，无需本机预先执行 `npm run build` 或 `mvn package`）。
+
+docker启动（以下为示例镜像名，可替换为自建镜像或 GHCR 镜像）
 
 ```
 docker run -d -p 8082:8080 \
