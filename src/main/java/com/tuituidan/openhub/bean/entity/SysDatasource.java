@@ -32,7 +32,8 @@ public class SysDatasource implements Serializable {
     @Column(name = "name", length = 100)
     private String name;
 
-    @Column(name = "desc", length = 100)
+    /** 对应列名不可为 MySQL 保留字 {@code DESC}，故使用 {@code description} */
+    @Column(name = "description", length = 100)
     private String desc;
 
     @Column(name = "type", length = 100)
