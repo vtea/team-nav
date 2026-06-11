@@ -22,7 +22,7 @@ export default {
 @import "~@/assets/styles/variables.scss";
 
 .nav-admin-main {
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   position: relative;
   overflow: auto;
